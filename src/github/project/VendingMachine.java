@@ -11,6 +11,8 @@ package github.project;
  */
 public interface VendingMachine {
     
+    public VendingMachine get();
+    
     public void removeSnack(int xIndex, int yIndex, int amtSnack);
     
     public void addCoin(int value);
