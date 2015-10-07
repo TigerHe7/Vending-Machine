@@ -10,9 +10,9 @@ public class VendingMachineImpl implements VendingMachine {
     String[][] snackName;
     int[][] snackAmount;
     int[][] snackPrice;
-        
-    int [] coinValue;
-    int [] coinAmount;
+
+    int[] coinValue;
+    int[] coinAmount;
 
     public VendingMachineImpl() {
         snackName = new String[5][10];
@@ -25,8 +25,7 @@ public class VendingMachineImpl implements VendingMachine {
         snackAmount = new int[rowSize][columnSize];
         snackPrice = new int[rowSize][columnSize];
     }
-    
-    
+
     @Override
     public void removeSnack(int xIndex, int yIndex, int amtSnack) {
         snackAmount[xIndex][yIndex] -= amtSnack;
@@ -48,17 +47,17 @@ public class VendingMachineImpl implements VendingMachine {
 
     @Override
     public String getSnackName(int xIndex, int yIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return snackName [xIndex][yIndex];
     }
 
     @Override
-    public String getSnackAmount(int xIndex, int yIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getSnackAmount(int xIndex, int yIndex) {
+        return snackAmount[xIndex][yIndex];
     }
 
     @Override
-    public String getSnackPrice(int xIndex, int yIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getSnackPrice(int xIndex, int yIndex) {
+        return snackPrice[xIndex][yIndex];
     }
 
 }
