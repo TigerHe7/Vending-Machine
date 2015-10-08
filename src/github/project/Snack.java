@@ -18,11 +18,16 @@ public abstract class Snack {
     private final String nutritionalStatement;
     private final String sugarComment;
 
-    public Snack(String name, Coordinate c, String nutritionalStatement, String sugarComment) {
+    private final int price;
+    private final int amount;
+
+    public Snack(String name, Coordinate c, String nutritionalStatement, String sugarComment, int price, int amount ) {
         this.name = name;
         this.c = c;
         this.nutritionalStatement = nutritionalStatement;
         this.sugarComment = sugarComment;
+        this.price = price;
+        this.amount = amount;
     }
 
     public Coordinate getCoord() {
@@ -32,13 +37,17 @@ public abstract class Snack {
     public String getName() {
         return name;
     }
-    
+
     public String getNutrition() {
         return nutritionalStatement;
     }
-    
+
     public String getSugar() {
         return sugarComment;
+    }
+
+    public int getPrice() {
+        return price;
     }
     
 }
