@@ -12,16 +12,15 @@ package github.project;
 public abstract class Snack {
 
     private final String name;
-
     private final Coordinate c;
 
     private final String nutritionalStatement;
     private final String sugarComment;
 
     private final int price;
-    private final int amount;
+    private int amount;
 
-    public Snack(String name, Coordinate c, String nutritionalStatement, String sugarComment, int price, int amount ) {
+    public Snack(String name, Coordinate c, String nutritionalStatement, String sugarComment, int price, int amount) {
         this.name = name;
         this.c = c;
         this.nutritionalStatement = nutritionalStatement;
@@ -50,4 +49,8 @@ public abstract class Snack {
         return price;
     }
     
+    public void removeSnacks(int amt) {
+        amount -= amt;
+    }
+
 }
