@@ -10,17 +10,11 @@ package github.project;
  * @author 073257974
  */
 public interface VendingMachine {
-    
-    public String getSnackName(int xIndex, int yIndex);
-     public int getSnackAmount(int xIndex, int yIndex);
-      public int getSnackPrice(int xIndex, int yIndex);
-    
-    public void removeSnack(int xIndex, int yIndex, int amtSnack);
-    
+
+    public Snack getSnack(Coordinate c);
+
     public void addCoin(int value);
-    
+
     public int[] getChange(int change);
-    
-    
-    
+
 }
