@@ -11,6 +11,7 @@ import java.util.Scanner;
  *
  * @author Jeff Niu
  */
+@SuppressWarnings("UseOfSystemOutOrSystemErr")
 public class Display {
 
     /**
@@ -57,10 +58,9 @@ public class Display {
                 usingVendingMachine = false;
             } else {
                 // Get the snack price
-                vendingMachine.removeSnack(snackCoord.x, snackCoord.y, 1);
-                final int snackPrice = vendingMachine.getSnackPrice(snackCoord.x, snackCoord.y);
+                final Snack snack = vendingMachine.getSnack(snackCoord);
                 // Get the coin inputs
-                final int[] inputCoins = getCoinInput(snackPrice);
+                final int[] inputCoins = getCoinInput(snack.getPrice());
                 final int amtPaid = sumCoinValue(inputCoins);
                 // Add the coins to the vending machine
                 for (int i = 0; i < coinValues.length; i++) {
@@ -69,7 +69,7 @@ public class Display {
                     }
                 }
                 // Dispense the change
-                final int[] changeCoins = vendingMachine.getChange(amtPaid - snackPrice);
+                final int[] changeCoins = vendingMachine.getChange(amtPaid - snack.getPrice());
                 dispenseChange(changeCoins);
             }
         } while (usingVendingMachine);
