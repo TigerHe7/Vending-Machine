@@ -43,13 +43,11 @@ public class VendingMachineImpl implements VendingMachine {
     @Override
     @SuppressWarnings("AssignmentToMethodParameter")
     public int[] getChange(int change) {
-        int[] returnedChange = new int[6];
+        int[] returnedChange = new int[5];
         for (int i = 4; i >= 0; i--) {
-            if (coins[i].getValue() <= change) {
-                coins[i].removeCoins(change / coins[i].getValue());
-                returnedChange[i] = change / coins[i].getValue();
-                change -= returnedChange[i];
-            }
+            coins[i].removeCoins(change / coins[i].getValue());
+            returnedChange[i] = change / coins[i].getValue();
+            change -= returnedChange[i] * coins[i].getValue();
         }
         return returnedChange;
     }
