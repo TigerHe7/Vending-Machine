@@ -27,13 +27,6 @@ public interface VendingMachine {
 
     /**
      *
-     * @param value
-     * @author Tiger He
-     */
-    public void addCoin(int value);
-
-    /**
-     *
      * @param change
      * @return
      * @author Tiger He
