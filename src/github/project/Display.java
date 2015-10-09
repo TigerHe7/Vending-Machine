@@ -112,8 +112,8 @@ public class Display {
             System.out.println("Enter the snack coordinate: ");
             coord = input.nextLine().toUpperCase();
             // Make sure that they have entered a valid coordinate
-        } while (isValidCoordinate(coord));
-        final int x = coord.charAt(1);
+        } while (!isValidCoordinate(coord));
+        final int x = Integer.valueOf(coord.substring(1));
         final int y = coord.charAt(0) - 'A';
         return new Coordinate(x, y);
     }
@@ -146,8 +146,9 @@ public class Display {
         int amtPaid = 0;
         int choice;
         do {
-            System.out.println("You need to pay $" + (snackPrice - amtPaid) / 100.0);
+            System.out.printf("You need to pay $%.2f%n", (snackPrice - amtPaid) / 100.0);
             do {
+                System.out.printf("You have paid $%.2f of $%.2f%n", amtPaid / 100.0, snackPrice / 100.0);
                 System.out.println("What coin will you deposit?");
                 System.out.println("Enter a negative number to finish.");
                 System.out.println("1. Nickel %0.05");
@@ -171,6 +172,7 @@ public class Display {
             }
         } while (amtPaid < snackPrice);
         coins[5] = new Coins(1, amtPaid, "Change"); // here we explot the coin system to return total amount paid
+        System.out.printf("Your change will be $%.2f%n", (amtPaid - snackPrice) / 100.0);
         return coins;
     }
 
