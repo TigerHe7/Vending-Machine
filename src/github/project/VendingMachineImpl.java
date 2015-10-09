@@ -32,7 +32,7 @@ public class VendingMachineImpl implements VendingMachine {
 
     @Override
     public Coins getCoins(int value) {
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 4; i++) {
             if (coins[i].getValue() == value) {
                 return coins[i];
             }
@@ -44,7 +44,7 @@ public class VendingMachineImpl implements VendingMachine {
     @SuppressWarnings("AssignmentToMethodParameter")
     public int[] getChange(int change) {
         int[] returnedChange = new int[6];
-        for (int i = 5; i >= 0; i--) {
+        for (int i = 4; i >= 0; i--) {
             if (coins[i].getValue() <= change) {
                 coins[i].removeCoins(change / coins[i].getValue());
                 returnedChange[i] = change / coins[i].getValue();
