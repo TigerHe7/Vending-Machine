@@ -1,5 +1,9 @@
 package github.project;
 
+/**
+ *
+ * @author Jeff Niu
+ */
 public class Doritos extends Snack {
 
     public Doritos() {

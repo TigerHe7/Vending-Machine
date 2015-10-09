@@ -1,5 +1,9 @@
 package github.project;
 
+/**
+ * 
+ * @author Tiger He
+ */
 public class MarsBar extends Snack {
 
     public MarsBar() {

@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package github.project;
 
 import java.util.Scanner;
 
 /**
+ * The {@code VendingMachine} {@code Display} is the class that handles all
+ * interaction with the {@code VendingMachine} user. This class will handle
+ * input from the user and output from the {@code VendingMachine}.
  *
  * @author Jeff Niu
  */
@@ -29,6 +27,9 @@ public class Display {
      */
     private final VendingMachine vendingMachine;
 
+    /**
+     * The primary input channel.
+     */
     private final Scanner input;
 
     /**
@@ -176,8 +177,8 @@ public class Display {
     /**
      * Sum up the values of the coins.
      *
-     * @param coins
-     * @return
+     * @param coins the array of coin amounts
+     * @return the total value in cents
      */
     private int sumCoinValue(int[] coins) {
         int amt = 0;
@@ -187,6 +188,11 @@ public class Display {
         return amt;
     }
 
+    /**
+     * Display the change.
+     * 
+     * @param coins the array of coin amounts.
+     */
     private void dispenseChange(int[] coins) {
         System.out.println("Here is your change:");
         System.out.println(coins[0] + " Nickels");
