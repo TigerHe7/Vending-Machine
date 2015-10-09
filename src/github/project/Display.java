@@ -61,14 +61,13 @@ public class Display {
                 // Get the snack price
                 final Snack snack = vendingMachine.getSnack(snackCoord);
                 // Get the coin inputs
-                final int[] inputCoins = getCoinInput(snack.getPrice());
-                final int amtPaid = sumCoinValue(inputCoins);
-                // Add the coins to the vending machine
-                for (int i = 0; i < coinValues.length; i++) {
-                    for (int j = 1; j <= inputCoins[i]; j++) {
-                        vendingMachine.addCoin(coinValues[i]);
-                    }
+                final Coins[] inputCoins = getCoinInput(snack.getPrice());
+                // Put them in the machine
+                for (int i = 0; i < 5; i++) {
+                    final Coins coin = inputCoins[i];
+                    vendingMachine.getCoins(coin.getValue()).addCoins(coin.getAmount());
                 }
+                int amtPaid = inputCoins[5].getAmount();
                 // Dispense the change
                 final int[] changeCoins = vendingMachine.getChange(amtPaid - snack.getPrice());
                 dispenseChange(changeCoins);
@@ -142,8 +141,8 @@ public class Display {
      * @param snackPrice the cost of the snack
      * @return an array representing the inputted coins
      */
-    private int[] getCoinInput(int snackPrice) {
-        final int[] paidCoins = new int[coinValues.length];
+    private Coins[] getCoinInput(int snackPrice) {
+        final Coins[] coins = Coins.getSet(6, 0);
         int amtPaid = 0;
         int choice;
         do {
@@ -163,34 +162,21 @@ public class Display {
                     choice = 100;
                 }
                 if (choice >= 1 && choice <= 5) {
-                    paidCoins[choice - 1]++;
+                    coins[choice - 1].addCoins(1);
+                    amtPaid += coins[choice - 1].getValue();
                 }
             } while (choice >= 0);
-            amtPaid = sumCoinValue(paidCoins);
             if (amtPaid < snackPrice) {
                 System.out.println("You have not paid enough!");
             }
         } while (amtPaid < snackPrice);
-        return paidCoins;
-    }
-
-    /**
-     * Sum up the values of the coins.
-     *
-     * @param coins the array of coin amounts
-     * @return the total value in cents
-     */
-    private int sumCoinValue(int[] coins) {
-        int amt = 0;
-        for (int i = 0; i < coins.length; i++) {
-            amt += coins[i] * coinValues[i];
-        }
-        return amt;
+        coins[5] = new Coins(1, amtPaid, "Change"); // here we explot the coin system to return total amount paid
+        return coins;
     }
 
     /**
      * Display the change.
-     * 
+     *
      * @param coins the array of coin amounts.
      */
     private void dispenseChange(int[] coins) {

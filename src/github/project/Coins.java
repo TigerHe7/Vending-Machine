@@ -8,6 +8,24 @@ package github.project;
 public class Coins {
 
     /**
+     * A shorthand method used to create a new array of coins representing
+     * nickels, dimes, quarters, loonies, and toonies with zero amounts.
+     *
+     * @param size an extended size
+     * @param amt a generic amt
+     * @return a new set
+     */
+    public static Coins[] getSet(int size, int amt) {
+        final Coins[] coins = new Coins[size >= 5 ? size : 5];
+        coins[0] = new Coins(5, amt, "Nickel");
+        coins[1] = new Coins(10, amt, "Dime");
+        coins[2] = new Coins(25, amt, "Quarter");
+        coins[3] = new Coins(100, amt, "Loonie");
+        coins[4] = new Coins(200, amt, "Toonie");
+        return coins;
+    }
+
+    /**
      * The value of the coin in cents.
      */
     private final int value;
@@ -65,6 +83,13 @@ public class Coins {
      */
     public void removeCoins(int amount) {
         this.amount -= amount;
+    }
+
+    /**
+     * @return the number of coins in this set
+     */
+    public int getAmount() {
+        return amount;
     }
 
 }

@@ -12,7 +12,7 @@ package github.project;
 public class VendingMachineImpl implements VendingMachine {
 
     private Snack[][] snacks;
-    private Coins[] coins = new Coins[6];
+    private Coins[] coins;
 
     public VendingMachineImpl() {
         this(5, 10);
@@ -20,8 +20,9 @@ public class VendingMachineImpl implements VendingMachine {
 
     public VendingMachineImpl(int rowSize, int columnSize) {
         snacks = new Snack[rowSize][columnSize];
-        //    snacks[0][0] = new MarsBar();
-        //    snacks[1][0] = new Doritos();
+        snacks[0][0] = new MarsBar();
+        snacks[1][0] = new Doritos();
+        coins = Coins.getSet(5, 100);
     }
 
     @Override
@@ -40,6 +41,7 @@ public class VendingMachineImpl implements VendingMachine {
     }
 
     @Override
+    @SuppressWarnings("AssignmentToMethodParameter")
     public int[] getChange(int change) {
         int[] returnedChange = new int[6];
         for (int i = 5; i >= 0; i--) {
