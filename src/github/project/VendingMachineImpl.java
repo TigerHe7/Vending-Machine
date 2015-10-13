@@ -45,10 +45,22 @@ public class VendingMachineImpl implements VendingMachine {
     public int[] getChange(int change) {
         int[] returnedChange = new int[5];
         for (int i = 4; i >= 0; i--) {
-            coins[i].removeCoins(change / coins[i].getValue());
-            returnedChange[i] = change / coins[i].getValue();
-            change -= returnedChange[i] * coins[i].getValue();
+            if (coins[i].getAmount() * coins[1].getValue() <= change) {
+                coins[i].removeCoins(change / coins[i].getValue());
+                returnedChange[i] = change / coins[i].getValue();
+                change -= returnedChange[i] * coins[i].getValue();
+            } else {
+
+                returnedChange[i] = coins[i].getAmount();
+                change -= coins[i].getAmount() * coins[i].getValue();
+                coins[i].removeCoins(coins[i].getAmount());
+
+            }
         }
+        if (change > 0) {
+            return null;
+        }
+        
         return returnedChange;
     }
 
