@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package github.project;
 
 /**
@@ -32,6 +27,7 @@ public abstract class Snack {
      * @author Jeff Niu
      */
     private final String nutritionalStatement;
+
     /**
      * Another nutritional statement specifically regarding the sugar
      * content of the snack.
@@ -46,6 +42,7 @@ public abstract class Snack {
      * @author Jeff Niu
      */
     private final int price;
+
     /**
      * The amount remaining of this particular snack.
      *
@@ -135,6 +132,7 @@ public abstract class Snack {
 
     /**
      * @return the amount of snacks stored
+     * @author Jeff Niu
      */
     public int getAmount() {
         return amount;
