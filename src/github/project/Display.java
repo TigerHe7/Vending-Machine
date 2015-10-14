@@ -85,6 +85,7 @@ public class Display {
                             dispenseChange(refundCoins);
                         } else {
                             PROFIT += snack.getPrice(); // add the paid money to the profit count
+                            snack.removeSnacks(1);
                             dispenseSnack(snack);
                             dispenseChange(changeCoins);
                         }
@@ -198,7 +199,7 @@ public class Display {
         System.out.printf("Your change will be $%.2f%n", (amtPaid - snackPrice) / 100.0);
         return coins;
     }
-
+    
     private void dispenseSnack(Snack snack) {
         System.out.printf("A %s is dispensed from the vending machine.%n", snack.getName());
         System.out.printf("Enjoy you snack! %s %s%n", snack.getNutrition(), snack.getSugar());
@@ -217,7 +218,7 @@ public class Display {
         System.out.println(coins[3] + pluralize(" Loonie", coins[3]));
         System.out.println(coins[4] + pluralize(" Toonie", coins[4]));
     }
-
+    
     private String pluralize(String s, int amt) {
         if (amt == 1) {
             return s;
@@ -230,5 +231,5 @@ public class Display {
             }
         }
     }
-
+    
 }
