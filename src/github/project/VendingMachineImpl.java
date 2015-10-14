@@ -15,7 +15,7 @@ public class VendingMachineImpl implements VendingMachine {
     private Coins[] coins;
 
     public VendingMachineImpl() {
-        this(5, 10);
+        this(3, 3);
     }
 
     public VendingMachineImpl(int rowSize, int columnSize) {
