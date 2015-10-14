@@ -133,4 +133,11 @@ public abstract class Snack {
         this.amount += amount;
     }
 
+    /**
+     * @return the amount of snacks stored
+     */
+    public int getAmount() {
+        return amount;
+    }
+
 }

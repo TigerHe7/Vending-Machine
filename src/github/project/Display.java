@@ -59,18 +59,30 @@ public class Display {
                 usingVendingMachine = false;
             } else {
                 // Get the snack price
-                final Snack snack = vendingMachine.getSnack(snackCoord);
-                // Get the coin inputs
-                final Coins[] inputCoins = getCoinInput(snack.getPrice());
-                // Put them in the machine
-                for (int i = 0; i < 5; i++) {
-                    final Coins coin = inputCoins[i];
-                    vendingMachine.getCoins(coin.getValue()).addCoins(coin.getAmount());
+                Snack snack;
+                // If we attempt to get a snack that does not exist
+                // Assign null and tell the user that it does not exist
+                try {
+                    snack = vendingMachine.getSnack(snackCoord);
+                } catch (final ArrayIndexOutOfBoundsException ex) {
+                    snack = null;
                 }
-                int amtPaid = inputCoins[5].getAmount();
-                // Dispense the change
-                final int[] changeCoins = vendingMachine.getChange(amtPaid - snack.getPrice());
-                dispenseChange(changeCoins);
+                if (snack != null) {
+                    // If there are no snacks left, retry the loop
+                    if (snack.getAmount() <= 0) {
+                        System.out.println("Sorry, but there are no " + snack.getName() + " left!");
+                    } else {
+                        // Get the coin inputs  
+                        final Coins[] inputCoins = getCoinInput(snack.getPrice());
+                        int amtPaid = inputCoins[5].getAmount();
+                        // Dispense the change
+                        final int[] changeCoins = vendingMachine.getChange(amtPaid - snack.getPrice());
+                        dispenseSnack(snack);
+                        dispenseChange(changeCoins);
+                    }
+                } else {
+                    System.out.println("That snack does not exist!");
+                }
             }
         } while (usingVendingMachine);
     }
@@ -165,15 +177,22 @@ public class Display {
                 if (choice >= 1 && choice <= 5) {
                     coins[choice - 1].addCoins(1);
                     amtPaid += coins[choice - 1].getValue();
+                    // Add the coins into the machine
+                    vendingMachine.getCoins(coins[choice - 1].getValue()).addCoins(1);
                 }
             } while (choice >= 0);
             if (amtPaid < snackPrice) {
                 System.out.println("You have not paid enough!");
             }
         } while (amtPaid < snackPrice);
-        coins[5] = new Coins(1, amtPaid, "Change"); // here we explot the coin system to return total amount paid
+        coins[5] = new Coins(1, amtPaid, "Change"); // here we exploit the coin system to return total amount paid
         System.out.printf("Your change will be $%.2f%n", (amtPaid - snackPrice) / 100.0);
         return coins;
+    }
+    
+    private void dispenseSnack(Snack snack) {
+        System.out.printf("A %s is dispensed from the vending machine.%n", snack.getName());
+        System.out.printf("Enjoy you snack! %s %s%n", snack.getNutrition(), snack.getSugar());
     }
 
     /**
@@ -189,5 +208,5 @@ public class Display {
         System.out.println(coins[3] + " Loonies");
         System.out.println(coins[4] + " Toonies");
     }
-
+    
 }
