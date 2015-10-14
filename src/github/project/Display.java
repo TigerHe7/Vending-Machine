@@ -59,18 +59,29 @@ public class Display {
                 usingVendingMachine = false;
             } else {
                 // Get the snack price
-                final Snack snack = vendingMachine.getSnack(snackCoord);
-                // Get the coin inputs
-                final Coins[] inputCoins = getCoinInput(snack.getPrice());
-                // Put them in the machine
-                for (int i = 0; i < 5; i++) {
-                    final Coins coin = inputCoins[i];
-                    vendingMachine.getCoins(coin.getValue()).addCoins(coin.getAmount());
+                Snack snack;
+                // If we attempt to get a snack that does not exist
+                // Assign null and tell the user that it does not exist
+                try {
+                    snack = vendingMachine.getSnack(snackCoord);
+                } catch (final ArrayIndexOutOfBoundsException ex) {
+                    snack = null;
                 }
-                int amtPaid = inputCoins[5].getAmount();
-                // Dispense the change
-                final int[] changeCoins = vendingMachine.getChange(amtPaid - snack.getPrice());
-                dispenseChange(changeCoins);
+                if (snack != null) {
+                    // Get the coin inputs  
+                    final Coins[] inputCoins = getCoinInput(snack.getPrice());
+                    // Put them in the machine
+                    for (int i = 0; i < 5; i++) {
+                        final Coins coin = inputCoins[i];
+                        vendingMachine.getCoins(coin.getValue()).addCoins(coin.getAmount());
+                    }
+                    int amtPaid = inputCoins[5].getAmount();
+                    // Dispense the change
+                    final int[] changeCoins = vendingMachine.getChange(amtPaid - snack.getPrice());
+                    dispenseChange(changeCoins);
+                } else {
+                    System.out.println("That snack does not exist!");
+                }
             }
         } while (usingVendingMachine);
     }
