@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package github.project;
 
 /**
@@ -14,14 +9,23 @@ public class VendingMachineImpl implements VendingMachine {
     private Snack[][] snacks;
     private Coins[] coins;
 
+    /**
+     *
+     */
     public VendingMachineImpl() {
         this(3, 3);
     }
 
+    /**
+     *
+     * @param rowSize
+     * @param columnSize
+     */
     public VendingMachineImpl(int rowSize, int columnSize) {
         snacks = new Snack[rowSize][columnSize];
         snacks[0][0] = new MarsBar();
         snacks[1][0] = new Doritos();
+        snacks[2][0] = new Starbursts();
         coins = Coins.getSet(5, 100);
     }
 
@@ -45,22 +49,25 @@ public class VendingMachineImpl implements VendingMachine {
     public int[] getChange(int change) {
         int[] returnedChange = new int[5];
         for (int i = 4; i >= 0; i--) {
-            if (coins[i].getAmount() * coins[1].getValue() <= change) {
+            if (coins[i].getAmount() * coins[i].getValue() >= change) {
                 coins[i].removeCoins(change / coins[i].getValue());
                 returnedChange[i] = change / coins[i].getValue();
                 change -= returnedChange[i] * coins[i].getValue();
             } else {
-
                 returnedChange[i] = coins[i].getAmount();
-                change -= coins[i].getAmount() * coins[i].getValue();
+                change -= returnedChange[i] * coins[i].getValue();
                 coins[i].removeCoins(coins[i].getAmount());
 
             }
+
         }
         if (change > 0) {
+            for (int i = 4; i >= 0; i--) {
+                coins[i].addCoins(returnedChange[i]);
+            }
             return null;
         }
-        
+
         return returnedChange;
     }
 

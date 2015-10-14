@@ -145,7 +145,7 @@ public class Display {
             // Dispense the snack
             dispense(snack);
             // Dispense the change
-            System.out.println("Here is your change:");
+            System.out.printf("$%.2f will be your change:%n", (amtPaid - snack.getPrice()) / 100.0);
             dispense(changeCoins);
             System.out.println();
         }
