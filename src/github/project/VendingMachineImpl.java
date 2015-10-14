@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package github.project;
 
 /**
@@ -14,14 +9,23 @@ public class VendingMachineImpl implements VendingMachine {
     private Snack[][] snacks;
     private Coins[] coins;
 
+    /**
+     *
+     */
     public VendingMachineImpl() {
-        this(5, 10);
+        this(3, 3);
     }
 
+    /**
+     *
+     * @param rowSize
+     * @param columnSize
+     */
     public VendingMachineImpl(int rowSize, int columnSize) {
         snacks = new Snack[rowSize][columnSize];
         snacks[0][0] = new MarsBar();
         snacks[1][0] = new Doritos();
+        snacks[2][0] = new Starbursts();
         coins = Coins.getSet(5, 100);
     }
 
@@ -58,6 +62,9 @@ public class VendingMachineImpl implements VendingMachine {
 
         }
         if (change > 0) {
+            for (int i = 4; i >= 0; i--) {
+                coins[i].addCoins(returnedChange[i]);
+            }
             return null;
         }
 
