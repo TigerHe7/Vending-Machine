@@ -13,9 +13,10 @@ import java.util.Scanner;
 public class Display {
 
     /**
-     * A reference array for the value of a coin.
+     * The ongoing tally of profits.
      */
-    private static final int[] coinValues = {5, 10, 25, 100, 200};
+    @SuppressWarnings("PublicField")
+    public static int PROFIT = 0;
 
     /**
      * Whether or not the user is using the {@code VendingMachine}.
@@ -70,15 +71,23 @@ public class Display {
                 if (snack != null) {
                     // If there are no snacks left, retry the loop
                     if (snack.getAmount() <= 0) {
-                        System.out.println("Sorry, but there are no " + snack.getName() + " left!");
+                        System.out.println("Sorry, but there are no " + pluralize(snack.getName(), 0) + " left!");
                     } else {
                         // Get the coin inputs  
                         final Coins[] inputCoins = getCoinInput(snack.getPrice());
                         int amtPaid = inputCoins[5].getAmount();
                         // Dispense the change
                         final int[] changeCoins = vendingMachine.getChange(amtPaid - snack.getPrice());
-                        dispenseSnack(snack);
-                        dispenseChange(changeCoins);
+                        if (changeCoins == null) {
+                            System.out.println("Sorry, but there is not enough change in the vending machine.");
+                            System.out.println("We apologize for the inconvenience; here is a refund.");
+                            final int[] refundCoins = vendingMachine.getChange(amtPaid);
+                            dispenseChange(refundCoins);
+                        } else {
+                            PROFIT += snack.getPrice(); // add the paid money to the profit count
+                            dispenseSnack(snack);
+                            dispenseChange(changeCoins);
+                        }
                     }
                 } else {
                     System.out.println("That snack does not exist!");
@@ -189,7 +198,7 @@ public class Display {
         System.out.printf("Your change will be $%.2f%n", (amtPaid - snackPrice) / 100.0);
         return coins;
     }
-    
+
     private void dispenseSnack(Snack snack) {
         System.out.printf("A %s is dispensed from the vending machine.%n", snack.getName());
         System.out.printf("Enjoy you snack! %s %s%n", snack.getNutrition(), snack.getSugar());
@@ -202,11 +211,24 @@ public class Display {
      */
     private void dispenseChange(int[] coins) {
         System.out.println("Here is your change:");
-        System.out.println(coins[0] + " Nickels");
-        System.out.println(coins[1] + " Dimes");
-        System.out.println(coins[2] + " Quarters");
-        System.out.println(coins[3] + " Loonies");
-        System.out.println(coins[4] + " Toonies");
+        System.out.println(coins[0] + pluralize(" Nickel", coins[0]));
+        System.out.println(coins[1] + pluralize(" Dime", coins[1]));
+        System.out.println(coins[2] + pluralize(" Quarter", coins[2]));
+        System.out.println(coins[3] + pluralize(" Loonie", coins[3]));
+        System.out.println(coins[4] + pluralize(" Toonie", coins[4]));
     }
-    
+
+    private String pluralize(String s, int amt) {
+        if (amt == 1) {
+            return s;
+        } else {
+            final char[] chars = s.toCharArray();
+            if (chars[chars.length - 1] == 's') {
+                return s;
+            } else {
+                return s + "s";
+            }
+        }
+    }
+
 }
