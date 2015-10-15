@@ -6,20 +6,22 @@ package github.project;
  */
 public class VendingMachineImpl implements VendingMachine {
 
-    private Snack[][] snacks;
-    private Coins[] coins;
+    private Snack[][] snacks; // reprents grid of snacks
+    private Coins[] coins; // represents array of coins by value 
 
     /**
-     *
+     * instantiate Vending Machine 3 slots wide and 3 slots tall
      */
     public VendingMachineImpl() {
         this(3, 3);
     }
 
     /**
+     * instantiate Vending Machine with given dimensions and put in all snacks
+     * and coins
      *
-     * @param rowSize
-     * @param columnSize
+     * @param rowSize the length of the row
+     * @param columnSize the length of the column
      */
     public VendingMachineImpl(int rowSize, int columnSize) {
         snacks = new Snack[rowSize][columnSize];
@@ -29,11 +31,24 @@ public class VendingMachineImpl implements VendingMachine {
         coins = Coins.getSet(5, 100);
     }
 
+    /**
+     *
+     * returns a snack at a given coordinate
+     *
+     * @param c coordinate of snack
+     * @return snacks snack at coordinate
+     */
     @Override
     public Snack getSnack(Coordinate c) {
         return snacks[c.x][c.y];
     }
 
+    /**
+     * returns coins of given value
+     *
+     * @param value value of coin
+     * @return coins[i] coins with given value
+     */
     @Override
     public Coins getCoins(int value) {
         for (int i = 0; i <= 4; i++) {
@@ -44,6 +59,12 @@ public class VendingMachineImpl implements VendingMachine {
         return null;
     }
 
+    /**
+     * removes change from machine and returns array of change amounts
+     *
+     * @param change amount of change required
+     * @return returnedChange array of coins amounts to match change value
+     */
     @Override
     @SuppressWarnings("AssignmentToMethodParameter")
     public int[] getChange(int change) {
