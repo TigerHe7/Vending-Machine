@@ -19,6 +19,12 @@ public class Display {
     public static int TOTAL_PROFIT = 0;
 
     /**
+     * The ongoing tally of items sold.
+     */
+    @SuppressWarnings("PublicField")
+    public static int ITEMS_SOLD = 0;
+
+    /**
      * Whether or not the user is using the {@code VendingMachine}.
      */
     private boolean usingVendingMachine;
@@ -60,12 +66,143 @@ public class Display {
                 buySnack();
             } else if (usageChoice == 2) {
                 // If they want to leave, quit the loop
+                System.out.println("You hear a quiet whimper from within.");
                 usingVendingMachine = false;
             } else if (usageChoice == 3) {
                 // If they want to administrate the machine, start that method
-                //administrate();
+                administrate();
             }
         } while (usingVendingMachine);
+    }
+
+    private void administrate() {
+        System.out.println("You attempt to access the vending machine's top-secret files.");
+        System.out.println("A password screen appears:\n");
+        System.out.println("What do you get when you square a compsci teacher?\n");
+        final String guess = input.nextLine();
+        if (!guess.toUpperCase().equals("R2D2")) {
+            System.out.println("\nThe vending machine makes a worrying noise.\n");
+            return;
+        }
+        System.out.println("\nYou've guessed the password!\n");
+        int adminChoice;
+        do {
+            System.out.println("CLASSIFIED VENDING MACHINE PROTOCOLS:");
+            adminChoice = getChoice("INITIATE ADMINISTRATION PROCEDURE?",
+                    "ACCESS FINANCIAL RECORDS.",
+                    "ACCESS EXPERIMENTAL ITEMS STOCK.",
+                    "ADJUST FINANCIAL RESOURCES.",
+                    "ADJUST EXPERIMENTAL ITEMS STOCK.",
+                    "EXIT ADMINISTRATION MODE.");
+            if (adminChoice == 1) {
+                displayFinancialRecords();
+            } else if (adminChoice == 2) {
+                displayStockRecords();
+            } else if (adminChoice == 3) {
+                adjustCoins();
+            } else if (adminChoice == 4) {
+                adjustSnacks();
+            }
+        } while (adminChoice != 5);
+    }
+
+    /**
+     * Display the total profit and the amount of coins.
+     */
+    private void displayFinancialRecords() {
+        System.out.printf("%nMONEY HERESOFAR EXTORTED FROM TEST SUBJECTS: $%.2f%n", TOTAL_PROFIT / 100.0);
+        System.out.printf("%nCURRENT INVENTORY OF FINANCIAL TRANSACTION FACILITATORS:%n");
+        final Coins[] coinValues = Coins.getSet(5, 0);
+        for (Coins coin : coinValues) {
+            final Coins coins = vendingMachine.getCoins(coin.getValue());
+            System.out.printf("%s: %d%n", pluralize(coins.getName(), coins.getAmount()), coins.getAmount());
+        }
+        System.out.println("\n");
+    }
+
+    /**
+     * Display the total number of items sold and the remaining stock.
+     */
+    @SuppressWarnings("AssignmentToForLoopParameter")
+    private void displayStockRecords() {
+        System.out.printf("%nITEMS HERESOFAR TESTED ON SUBJECTS: %d%n", ITEMS_SOLD);
+        System.out.printf("%nCURRENT INVENTORY OF EXPERIMENTAL ITEMS:%n");
+        for (int y = 0; y >= 0; y++) {
+            for (int x = 0; x >= 0; x++) {
+                Snack s;
+                try {
+                    s = vendingMachine.getSnack(new Coordinate(x, y));
+                } catch (final ArrayIndexOutOfBoundsException ex) {
+                    s = null;
+                    if (x == 0) {
+                        y = -2;
+                    }
+                    x = -2;
+                }
+                if (s != null) {
+                    System.out.printf("%s: %d%n", s.getName(), s.getAmount());
+                }
+            }
+        }
+        System.out.println("\n");
+    }
+
+    /**
+     * Whether a string is an integer.
+     */
+    private boolean isParsable(final String s) {
+        try {
+            final int i = Integer.parseInt(s);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set directly the amount of each coin.
+     */
+    private void adjustCoins() {
+        System.out.printf("%nDICTATE QUANTITY OF FINANCIAL TRANSACTION FACILITATORS:%n");
+        final Coins[] coinValues = Coins.getSet(5, 0);
+        for (Coins coin : coinValues) {
+            final Coins coins = vendingMachine.getCoins(coin.getValue());
+            System.out.printf("%ss: ", coins.getName());
+            String setAmt;
+            do {
+                setAmt = input.nextLine();
+            } while (!isParsable(setAmt) && Integer.parseInt(setAmt) >= 0);
+            coins.addCoins(Integer.parseInt(setAmt) - coins.getAmount());
+        }
+        System.out.println("\n");
+    }
+
+    @SuppressWarnings("AssignmentToForLoopParameter")
+    private void adjustSnacks() {
+        System.out.printf("%nDICTATE QUANTITY OF EXPERIMENTAL ITEMS:%n");
+        for (int y = 0; y >= 0; y++) {
+            for (int x = 0; x >= 0; x++) {
+                Snack s;
+                try {
+                    s = vendingMachine.getSnack(new Coordinate(x, y));
+                } catch (final ArrayIndexOutOfBoundsException ex) {
+                    s = null;
+                    if (x == 0) {
+                        y = -2;
+                    }
+                    x = -2;
+                }
+                if (s != null) {
+                    System.out.printf("%s: ", s.getName());
+                    String setAmt;
+                    do {
+                        setAmt = input.nextLine();
+                    } while (!isParsable(setAmt) && Integer.parseInt(setAmt) >= 0);
+                    s.removeSnacks(s.getAmount() - Integer.parseInt(setAmt));
+                }
+            }
+        }
+        System.out.println("\n");
     }
 
     /**
@@ -140,6 +277,8 @@ public class Display {
         } else {
             // Add to the total profit
             TOTAL_PROFIT += snack.getPrice();
+            // Add to the total amount sold
+            ITEMS_SOLD++;
             // Remove one snack from the stock
             snack.removeSnacks(1);
             // Dispense the snack
@@ -169,6 +308,7 @@ public class Display {
         do {
             nextColumnExists = true;
             x = 0;
+            String prices = "\n";
             do {
                 Snack s; // the snack whose name we want to display
                 try {
@@ -182,10 +322,12 @@ public class Display {
                 if (s != null) {
                     // Print the coordinate and the snack name
                     final String coord = (char) (y + 'A') + String.valueOf(x);
-                    System.out.printf("%s %-12s", coord, s.getName());
+                    System.out.printf("%s %-18s", coord, s.getName(), s.getPrice() / 100.0);
+                    prices += String.format("$%-20.2f", s.getPrice() / 100.0);
                 } else {
                     // The next snack over does not exist
                     nextColumnExists = false;
+                    System.out.println(prices + "\n");
                     if (x == 0) {
                         // The next row does not exist
                         nextRowExists = false;

@@ -23,9 +23,15 @@ public class VendingMachineImpl implements VendingMachine {
      */
     public VendingMachineImpl(int rowSize, int columnSize) {
         snacks = new Snack[rowSize][columnSize];
-        snacks[0][0] = new MarsBar();
-        snacks[1][0] = new Doritos();
-        snacks[2][0] = new Starbursts();
+        snacks[0][0] = new MarsBar(10);
+        snacks[1][0] = new Doritos(10);
+        snacks[2][0] = new Starbursts(10);
+        snacks[0][1] = new FuzzyPeaches(10);
+        snacks[1][1] = new Apple(10);
+        snacks[2][1] = new Coke(10);
+        snacks[0][2] = new SwagCandy(10);
+        snacks[1][2] = new CyanidePills(10);
+        snacks[2][2] = new RDTongueBlasters(10);
         coins = Coins.getSet(5, 100);
     }
 
