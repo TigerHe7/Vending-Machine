@@ -450,7 +450,7 @@ public class Display {
      */
     private void dispense(Snack snack) {
         System.out.printf("A %s is dispensed from the vending machine.%n%n", snack.getName());
-        System.out.printf("Enjoy you snack! %s %s%n%n", snack.getNutrition(), snack.getSugar());
+        System.out.printf("Enjoy your snack! %s %s%n%n", snack.getNutrition(), snack.getSugar());
     }
 
     /**

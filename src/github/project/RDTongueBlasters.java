@@ -1,7 +1,7 @@
 package github.project;
 
 /**
- * guarantee
+ * 
  *
  * @author Jeff Niu
  */

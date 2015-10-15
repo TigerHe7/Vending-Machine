@@ -2,7 +2,7 @@ package github.project;
 
 /**
  *
- * @author Jeff Niu
+ * @author Tiger He
  */
 public class FuzzyPeaches extends Snack {
 
