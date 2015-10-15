@@ -22,6 +22,7 @@ public interface VendingMachine {
      *
      * @param value the value of the coin in cents
      * @return the coins class
+     * @author Jeff Niu
      */
     public Coins getCoins(int value);
 
