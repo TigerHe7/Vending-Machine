@@ -110,18 +110,25 @@ public class Display {
         } while (usingVendingMachine);
     }
 
+    /**
+     * The administrator menu. From here, the user can view the stocks or
+     * adjust them.
+     */
     private void administrate() {
         System.out.println("You attempt to access the vending machine's top-secret files.");
         System.out.println("A password screen appears:\n");
         System.out.println("What do you get when you square a compsci teacher?\n");
         final String guess = input.nextLine();
+        // Make sure the user enters the correct password
         if (!guess.toUpperCase().equals("R2D2")) {
+            // If they are incorrect, quit this menu
             System.out.println("\nThe vending machine makes a worrying noise.\n");
             return;
         }
         System.out.println("\nYou've guessed the password!\n");
         int adminChoice;
         do {
+            // Ask the user what they want to do
             System.out.println("CLASSIFIED VENDING MACHINE PROTOCOLS:");
             adminChoice = getChoice("INITIATE ADMINISTRATION PROCEDURE?",
                     "ACCESS FINANCIAL RECORDS.",
