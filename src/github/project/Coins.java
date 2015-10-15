@@ -82,7 +82,7 @@ public class Coins {
      * @param amount the number of coins to remove
      */
     public void removeCoins(int amount) {
-        
+
         this.amount -= amount;
     }
 

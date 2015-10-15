@@ -8,9 +8,10 @@ public class Doritos extends Snack {
 
     /**
      *
+     * @param amt
      */
-    public Doritos() {
-        super("Doritos", new Coordinate(1, 0), "Diabetes in a bag.", "Salty.", 200, 10);
+    public Doritos(final int amt) {
+        super("Doritos", new Coordinate(1, 0), "Diabetes in a bag.", "Salty.", 200, amt);
     }
 
 }

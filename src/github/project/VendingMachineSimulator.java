@@ -20,7 +20,7 @@ public class VendingMachineSimulator {
     public static void main(String[] args) {
         final VendingMachine vendingMachine = new VendingMachineImpl();
         final Display display = new Display(vendingMachine);
-        display.startDisplay();
+        display.startVendingMachine();
     }
 
 }
