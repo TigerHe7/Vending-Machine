@@ -3,28 +3,28 @@ package github.project;
 /**
  * This class will handle all snacks in the {@code VendingMachine}.
  *
- * @author Jeff Niu, Tiger He
+ * @author Tiger He
  */
 public abstract class Snack {
 
     /**
      * The name of the snack.
      *
-     * @author Jeff Niu
+     * @author Tiger He 
      */
     private final String name;
 
     /**
      * The coordinate of the snack in the {@code VendingMachine}.
      *
-     * @author Jeff Niu
+     * @author Tiger He
      */
     private final Coordinate c;
 
     /**
      * A nutritional statement regarding the snack.
      *
-     * @author Jeff Niu
+     * @author Tiger He
      */
     private final String nutritionalStatement;
 
@@ -32,21 +32,21 @@ public abstract class Snack {
      * Another nutritional statement specifically regarding the sugar
      * content of the snack.
      *
-     * @author Jeff Niu
+     * @author Tiger He
      */
     private final String sugarComment;
 
     /**
      * The price of the snack.
      *
-     * @author Jeff Niu
+     * @author Tiger He 
      */
     private final int price;
 
     /**
      * The amount remaining of this particular snack.
      *
-     * @author Jeff Niu
+     * @author Tiger He
      */
     private int amount;
 
@@ -59,7 +59,7 @@ public abstract class Snack {
      * @param sugarComment the sugar amount comment
      * @param price the price of the snack
      * @param amount the number of snacks initially stocked
-     * @author Jeff Niu
+     * @author Tiger He 
      */
     public Snack(String name, Coordinate c, String nutritionalStatement, String sugarComment, int price, int amount) {
         this.name = name;
@@ -72,7 +72,7 @@ public abstract class Snack {
 
     /**
      * @return the coordinate of the snack
-     * @author Jeff Niu
+     * @author Tigeer He 
      */
     public Coordinate getCoord() {
         return c;
@@ -80,7 +80,7 @@ public abstract class Snack {
 
     /**
      * @return the name of the snack
-     * @author Jeff Niu
+     * @author Tiger He 
      */
     public String getName() {
         return name;
@@ -88,7 +88,7 @@ public abstract class Snack {
 
     /**
      * @return the nutritional statement of the snack
-     * @author Jeff Niu
+     * @author Tiger He 
      */
     public String getNutrition() {
         return nutritionalStatement;
@@ -96,7 +96,7 @@ public abstract class Snack {
 
     /**
      * @return the sugar comment of the snack
-     * @author Jeff Niu
+     * @author Tiger He
      */
     public String getSugar() {
         return sugarComment;
@@ -104,7 +104,7 @@ public abstract class Snack {
 
     /**
      * @return the price of the snack
-     * @author Jeff Niu
+     * @author Tiger He 
      */
     public int getPrice() {
         return price;
@@ -124,7 +124,7 @@ public abstract class Snack {
      * Stock some more snacks in the {@code VendingMachine}.
      *
      * @param amount the amount to add
-     * @author Jeff Niu
+     * @author Tiger He 
      */
     public void addSnacks(int amount) {
         this.amount += amount;
@@ -132,7 +132,7 @@ public abstract class Snack {
 
     /**
      * @return the amount of snacks stored
-     * @author Jeff Niu
+     * @author Tiger He
      */
     public int getAmount() {
         return amount;
