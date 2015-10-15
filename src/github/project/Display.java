@@ -25,6 +25,41 @@ public class Display {
     public static int ITEMS_SOLD = 0;
 
     /**
+     * Whether a string is an integer.
+     *
+     * @return true if the string is an integer
+     */
+    private static boolean isParsable(final String s) {
+        try {
+            final int i = Integer.parseInt(s);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Pluralize a noun if it is not already if we are discussing more than
+     * one of such items.
+     *
+     * @param s the noun
+     * @param amt the amount of such
+     * @return the pluralized noun or maybe not
+     */
+    private static String pluralize(String s, int amt) {
+        if (amt == 1) {
+            return s;
+        } else {
+            final char[] chars = s.toCharArray();
+            if (chars[chars.length - 1] == 's') {
+                return s;
+            } else {
+                return s + "s";
+            }
+        }
+    }
+
+    /**
      * Whether or not the user is using the {@code VendingMachine}.
      */
     private boolean usingVendingMachine;
@@ -145,18 +180,6 @@ public class Display {
             }
         }
         System.out.println("\n");
-    }
-
-    /**
-     * Whether a string is an integer.
-     */
-    private boolean isParsable(final String s) {
-        try {
-            final int i = Integer.parseInt(s);
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -314,7 +337,7 @@ public class Display {
                 try {
                     s = vendingMachine.getSnack(new Coordinate(x, y));
                 } catch (ArrayIndexOutOfBoundsException ex) {
-                    // Since we do not know how many snacks the vending 
+                    // Since we do not know how many snacks the vending
                     // machine has, we must catch any out of bounds 
                     // exceptions and handle them appropriately
                     s = null;
@@ -441,27 +464,6 @@ public class Display {
         System.out.println(coins[2] + pluralize(" Quarter", coins[2]));
         System.out.println(coins[3] + pluralize(" Loonie", coins[3]));
         System.out.println(coins[4] + pluralize(" Toonie", coins[4]));
-    }
-
-    /**
-     * Pluralize a noun if it is not already if we are discussing more than
-     * one of such items.
-     *
-     * @param s the noun
-     * @param amt the amount of such
-     * @return the pluralized noun or maybe not
-     */
-    private String pluralize(String s, int amt) {
-        if (amt == 1) {
-            return s;
-        } else {
-            final char[] chars = s.toCharArray();
-            if (chars[chars.length - 1] == 's') {
-                return s;
-            } else {
-                return s + "s";
-            }
-        }
     }
 
 }
